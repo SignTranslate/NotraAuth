@@ -6,7 +6,7 @@
 //
 
 import Foundation
-public class AlertViewModel {
+open class AlertViewModel {
     
     public init() { }
     
