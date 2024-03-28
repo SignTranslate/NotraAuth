@@ -6,3 +6,6 @@
 //
 
 import Foundation
+enum AuthViewPaths: Equatable, Hashable {
+    case resetPassword
+}

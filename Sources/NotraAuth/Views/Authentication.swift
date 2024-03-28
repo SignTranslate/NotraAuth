@@ -7,12 +7,28 @@
 
 import SwiftUI
 
-struct Authenticate: View {
+struct Authentication: View {
+    @EnvironmentObject var viewRouter: AuthViewRouter
+    @State private var signUp: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack(path: $viewRouter.authPath) {
+            Group {
+                if signUp {
+                    SignUpView(signUp: $signUp)
+                } else {
+                    SignInView(signUp: $signUp)
+                }
+            }.navigationDestination(for: AuthViewPaths.self) { page in
+                viewRouter.buildAuthView(page: page)
+            }
+        }
     }
 }
 
 #Preview {
-    Authenticate()
+    Authentication()
+        .environmentObject(AuthViewRouter())
+        .environment(\.locale, .init(identifier: "ru"))
+
 }

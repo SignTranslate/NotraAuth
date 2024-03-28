@@ -6,3 +6,7 @@
 //
 
 import Foundation
+public enum TextFieldHelperStyle {
+    case textfield
+    case password
+}
