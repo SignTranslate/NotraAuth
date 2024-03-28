@@ -15,7 +15,8 @@ let package = Package(
     ], dependencies: [
         .package(url: "https://github.com/elai950/AlertToast.git", branch: "master"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "10.4.0")),
-        .package(url: "https://github.com/google/GoogleSignIn-iOS", .upToNextMajor(from: "7.1.0"))
+        .package(url: "https://github.com/google/GoogleSignIn-iOS", .upToNextMajor(from: "7.1.0")),
+        .package(url: "https://github.com/huynguyencong/DataCache.git", branch: "master")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -24,9 +25,10 @@ let package = Package(
             name: "NotraAuth",
             dependencies: [
                 "AlertToast",
+                "DataCache",
                 .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
-                .product(name: "GoogleSignIn", package: "googlesignin-ios"),
+                .product(name: "GoogleSignIn", package: "googlesignin-ios")
             ],
             resources: [.process("Resources")]),
         .testTarget(

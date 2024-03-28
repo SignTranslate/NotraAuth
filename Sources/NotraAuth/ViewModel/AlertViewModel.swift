@@ -6,7 +6,7 @@
 //
 
 import Foundation
-public class AlertViewModel {
+open class AlertViewModel {
     public func makeAlert(with error: Error, message: inout String, alert: inout Bool ) {
         message = error.localizedDescription
         alert.toggle()

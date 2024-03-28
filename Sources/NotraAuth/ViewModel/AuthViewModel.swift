@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import SwiftUI
 import AuthenticationServices
+import DataCache
 
 public class AuthViewModel: AlertViewModel, ObservableObject {
     @Published public var loading: Bool = false
@@ -158,8 +159,7 @@ public class AuthViewModel: AlertViewModel, ObservableObject {
             case .failure(let error):
                 self.makeAlert(with: error, message: &self.alertMessage, alert: &self.showAlert)
             case .success(()):
-                print("account deleted -> delete cache")
-//                DataCache.instance.cleanAll()
+                DataCache.instance.cleanAll()
             }
             
             if !Task.isCancelled {
