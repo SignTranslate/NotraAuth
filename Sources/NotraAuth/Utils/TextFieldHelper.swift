@@ -14,6 +14,7 @@ public struct TextFieldHelper: View {
     let keyboard: UIKeyboardType
     let autocapitalization: TextInputAutocapitalization?
     @Binding var text: String
+    let dynamicSize: DynamicTypeSize
     
     public init(type: TextFieldHelperStyle,
          placeholder: String,
@@ -25,6 +26,7 @@ public struct TextFieldHelper: View {
         self.keyboard = keyboard
         self.autocapitalization = autocapitalization
         self._text = text
+        self.dynamicSize = UIDevice.current.userInterfaceIdiom == .phone ? .large : .xxLarge
     }
     
     public var body: some View {
@@ -34,13 +36,13 @@ public struct TextFieldHelper: View {
                 HStack {
                     if showPassword {
                         TextField(placeholder, text: $text)
-                            .dynamicTypeSize(UIDevice.current.userInterfaceIdiom == .phone ? .large : .xxLarge)
+                            .dynamicTypeSize(dynamicSize)
                             .textContentType(.password)
                             .textInputAutocapitalization(autocapitalization)
                             .frame(height: 25)
                     } else {
                         SecureField(placeholder, text: $text)
-                            .dynamicTypeSize(UIDevice.current.userInterfaceIdiom == .phone ? .large : .xxLarge)
+                            .dynamicTypeSize(dynamicSize)
                             .textContentType(.password)
                             .frame(height: 25)
                     }
@@ -51,7 +53,7 @@ public struct TextFieldHelper: View {
                         showPassword.toggle()
                     } label: {
                         Image(systemName: showPassword ? "eye.slash" : "eye")
-                            .dynamicTypeSize(.xxLarge)
+                            .dynamicTypeSize(dynamicSize)
                             .tint(.primary)
                     }
                     
@@ -65,7 +67,7 @@ public struct TextFieldHelper: View {
             VStack(spacing: 0) {
                 TextField(placeholder, text: $text)
                     .textInputAutocapitalization(autocapitalization)
-                    .dynamicTypeSize(UIDevice.current.userInterfaceIdiom == .phone ? .large : .xxLarge)
+                    .dynamicTypeSize(dynamicSize)
                     .keyboardType(keyboard)
                     .padding([.top, .trailing])
                         .padding(.bottom, 8)
