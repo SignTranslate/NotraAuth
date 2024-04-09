@@ -102,7 +102,9 @@ extension AuthService: AuthServiceProtocol {
         return await APIHelper.shared.voidRequest {
             if let token = credential.identityToken,
                let tokenString = String(data: token, encoding: .utf8) {
-                let firebaseCredential = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
+                let firebaseCredential = OAuthProvider.appleCredential(withIDToken: tokenString,
+                                                                       rawNonce: nonce,
+                                                                       fullName: credential.fullName)
 
                 try await Auth.auth().signIn(with: firebaseCredential)
             } else {
