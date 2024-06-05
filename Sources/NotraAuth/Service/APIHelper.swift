@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import FirebaseFunctions
 
 public class APIHelper {
     public static let shared = APIHelper()
     
-    private init() { }
+    let function: Functions
+    private init() { 
+        self.function = Functions.functions()
+    }
     
     public func voidRequest(action: () async throws -> Void) async -> Result<Void, Error> {
         do {
@@ -28,5 +32,26 @@ public class APIHelper {
         } catch {
             return .failure(error)
         }
+    }
+    
+    public func onCallRequest<T>(params: [String: Any]? = nil,
+                          name: String,
+                          responseType: T.Type) async throws -> T where T : Decodable {
+        
+        do {
+            let result = try await function.httpsCallable(name).call(params)
+            print("on Call result")
+            
+            if let data = try? JSONSerialization.data(withJSONObject: result.data) {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(T.self, from: data)
+                return response
+            } else {
+                throw CustomErrors.createErrorWithMessage("Invalid JSON data")
+            }
+        } catch {
+            throw error
+        }
+        
     }
 }

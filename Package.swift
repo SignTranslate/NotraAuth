@@ -27,6 +27,7 @@ let package = Package(
                 "AlertToast",
                 "DataCache",
                 .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseFunctions", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
                 .product(name: "GoogleSignIn", package: "googlesignin-ios")
             ],
